@@ -10,6 +10,10 @@ Slides de la présentation donnée au **Séminaire du développement 2026**.
 
 Les slides sont écrites en Markdown avec [Marp](https://marp.app/) dans `slides.md`.
 
+**Extension VS Code :** [Marp for VS Code](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode) permet de prévisualiser les slides directement dans l'éditeur sans passer par le terminal.
+
+**En ligne de commande :**
+
 ```bash
 # Prévisualiser en live
 npx @marp-team/marp-cli --theme wave.css --html --allow-local-files --watch slides.md
@@ -17,7 +21,3 @@ npx @marp-team/marp-cli --theme wave.css --html --allow-local-files --watch slid
 # Générer le HTML
 npx @marp-team/marp-cli --theme wave.css --html --allow-local-files slides.md -o slides.html
 ```
-
-## CI/CD
-
-À chaque push sur `main`, GitHub Actions génère les slides et les publie automatiquement sur GitHub Pages.
