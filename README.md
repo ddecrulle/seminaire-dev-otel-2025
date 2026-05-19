@@ -11,14 +11,11 @@ Slides de la présentation donnée au **Séminaire du développement 2026**.
 Les slides sont écrites en Markdown avec [Marp](https://marp.app/) dans `slides.md`.
 
 ```bash
-# Installer Marp CLI
-npm install -g @marp-team/marp-cli
-
 # Prévisualiser en live
-marp --theme wave.css --html --allow-local-files --watch slides.md
+npx @marp-team/marp-cli --theme wave.css --html --allow-local-files --watch slides.md
 
 # Générer le HTML
-marp --theme wave.css --html --allow-local-files slides.md -o slides.html
+npx @marp-team/marp-cli --theme wave.css --html --allow-local-files slides.md -o slides.html
 ```
 
 ## CI/CD
