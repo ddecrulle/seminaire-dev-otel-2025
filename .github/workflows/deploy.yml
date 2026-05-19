@@ -28,9 +28,11 @@ jobs:
         run: npm install -g @marp-team/marp-cli
 
       - name: Generate HTML slides
-        run: marp --theme wave.css --html --allow-local-files slides.md -o dist/index.html
+        run: |
+          marp --theme wave.css --html --allow-local-files slides.md -o dist/index.html
+          touch dist/.nojekyll
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
@@ -43,4 +45,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
