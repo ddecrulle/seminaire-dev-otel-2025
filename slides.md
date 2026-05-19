@@ -157,7 +157,7 @@ Metadonnées contextuelles
 <div>
 
 Une **trace** = l'arbre complet d'une interaction.
-Un **span** = une opération dans un service.
+Un **span** = une opération avec un début et une fin..
 
 Tous les spans d'une trace partagent le même `trace_id`.
 
@@ -208,16 +208,20 @@ Le contexte voyage dans le header HTTP `traceparent` (W3C TraceContext) :
 
 ```http
 traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
-             │  └────────── trace_id ───────────┘ └── span_id ───┘  │
-           version                                               sampled
+             │  └────────── trace_id ──────────┘ └── parent_id ─┘ │
+          version                                             trace flags
 ```
 
-À chaque saut, le `trace_id` reste identique — seul le `span_id` change :
+À chaque saut, le `parent_id` = le `span_id` de l'expéditeur :
 
-```
-Browser  →  trace_id: 4bf92f...  span_id: 00f067...  (root span)
-  API    →  trace_id: 4bf92f...  span_id: b9c7c9...  (parent: 00f067)
-    DB   →  trace_id: 4bf92f...  span_id: a3ce92...  (parent: b9c7c9)
+```http
+# Browser → API
+traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
+                                                  ↑ span_id du Browser
+
+# API → DB
+traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-b9c7c989068d6233-01
+                                                  ↑ span_id de l'API
 ```
 
 ---
