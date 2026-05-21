@@ -163,7 +163,7 @@ Tous les spans d'une trace partagent le même `trace_id`.
 
 ```
 TraceID: abc-123
-  ├─ browser  page load          [0ms → 340ms]
+  ├─ browser  button click          [0ms → 340ms]
   └─ browser  POST /formulaire   [20ms → 118ms]
        ├─ api  validation        [25ms →  33ms] ✓
        └─ api  INSERT base       [35ms → 120ms] ❌
@@ -218,23 +218,20 @@ traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
 # Browser → API
 traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01
                                                   ↑ span_id du Browser
-
-# API → DB
-traceparent: 00-4bf92f3577b34da6a3ce929d0e0e4736-b9c7c989068d6233-01
-                                                  ↑ span_id de l'API
 ```
 
 ---
 
 # Baggage
 
-Un second header W3C, indépendant de `traceparent`, pour propager du **contexte métier** entre services.
+Un mécanisme OTel pour propager du **contexte métier** entre services, indépendant de `traceparent`.
+
+Sur HTTP, il transite via le header W3C `baggage` :
+
 
 ```http
 baggage: userId=dupont,env=prod,featureFlag=new-ui
 ```
-
-<br/>
 
 Utile pour corréler des traces avec un utilisateur, une session, ou un flag etc....
 
@@ -242,7 +239,7 @@ Utile pour corréler des traces avec un utilisateur, une session, ou un flag etc
 
 # Conventions sémantiques
 
-OTel standardise les noms d'attributs — identiques dans tous les langages et tous les backends.
+OTel standardise les noms d'attributs, des events — identiques dans tous les langages et tous les backends.
 
 <div class="columns">
 <div>
@@ -340,14 +337,11 @@ Browser (localhost:5173)   todo-rest-api (localhost:8080)   Keycloak (localhost:
 
 <br>
 
-- Le navigateur produit des spans ✅
+- Le navigateur produit des traces ✅
 - Le `traceparent` est injecté dans chaque `fetch()` ✅
 - Jaeger reçoit les données des deux côtés ✅
 - La propagation de contexte **au sein du browser** reste imparfaite ⚠️
 
-<br/>
-
-Maintenant : comment on déploie ça en vrai ?
 
 ---
 
