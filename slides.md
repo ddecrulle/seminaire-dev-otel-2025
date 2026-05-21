@@ -70,7 +70,7 @@ Combien d'autres ont abandonné sans dire un mot ?
 - Ce que fait le navigateur
 - Erreurs silencieuses côté client
 - Le lien entre les services — chaque monitoring est un silo
-- **Aucune trace distribuée** front → back → base de données
+- **Aucune trace distribuée**
 
 </div>
 </div>
@@ -273,9 +273,9 @@ OTel standardise les noms d'attributs — identiques dans tous les langages et t
 
 ---
 
-# Le browser orchestre tous les flux
+# Le navigateur orchestre tous les flux
 
-Chaque flux **part du browser — et y revient** :
+Chaque flux **part du navigateur — et y revient** :
 
 ```
 Browser  ──────────────────────►  Keycloak / Auth
@@ -340,7 +340,7 @@ Browser (localhost:5173)   todo-rest-api (localhost:8080)   Keycloak (localhost:
 
 <br>
 
-- Le browser produit des spans ✅
+- Le navigateur produit des spans ✅
 - Le `traceparent` est injecté dans chaque `fetch()` ✅
 - Jaeger reçoit les données des deux côtés ✅
 - La propagation de contexte **au sein du browser** reste imparfaite ⚠️
@@ -369,7 +369,7 @@ Un service dédié avec trois responsabilités :
 **Recevoir**
 
 - Spans du browser
-- Spans des servicesc
+- Spans des services
 - Via OTLP/HTTP ou gRPC
 
 </div>
@@ -396,7 +396,7 @@ Un service dédié avec trois responsabilités :
 
 ---
 
-# Le collecteur doit être joignable depuis le browser
+# Le collecteur doit être joignable depuis le navigateur
 
 Si notre frontend est exposé sur Internet, **le collecteur aussi**.
 
@@ -404,13 +404,13 @@ On peut en avoir plusieurs — ils parlent OTLP entre eux :
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
-│  Internet / DMZ                                                   │
+│  Internet / DMZ                                                  │
 │  Browser  ──► Collector DMZ  (exposé, léger, CORS configuré)     │
 └──────────────────────────────┬───────────────────────────────────┘
                                │ OTLP / réseau interne
 ┌──────────────────────────────┴───────────────────────────────────┐
 │  Réseau interne              ↓                                   │
-│  Services backend  ────────► Collector interne  ──► Elasticsearch│
+│  Services backend  ────────► Collector interne  ──► Elastic      │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
@@ -434,13 +434,13 @@ On peut en avoir plusieurs — ils parlent OTLP entre eux :
 
 # Ce qu'on retient
 
-- Le **browser est le point d'entrée naturel** — c'est là que vit l'utilisateur, c'est là que la trace doit commencer
+- Le **navigatteur est le point d'entrée naturel** — c'est là que vit l'utilisateur, c'est là que la trace doit commencer
 - OTel est un **standard ouvert** — l'instrumentation est pérenne, le backend (Elastic, Jaeger…) est un détail interchangeable
 - C'est **compatible avec l'existant** — quelques lignes de config suffisent pour brancher OTel sur une stack ELK déjà en place
 
 ---
 
-# Limites côté browser
+# Limites côté navigateur
 
 - Le SDK browser est toujours **expérimental** — API susceptibles de changer
 - Seules les **traces** sont supportées — pas de logs, pas de métriques
